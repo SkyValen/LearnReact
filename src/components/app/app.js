@@ -14,7 +14,7 @@ export default class App extends Component {
         this.state = {
             data: [
                 {label: 'Going to learn React', important: true, like: false, id: 1},
-                {label: 'That is so good', important: false, like: false, id: 2},
+                {label: 'That is a biggest pain in the ass', important: false, like: false, id: 2},
                 {label: 'I need a break...', important: false, like: false, id: 3}
             ],
             term: '',
@@ -24,11 +24,12 @@ export default class App extends Component {
         this.addItem = this.addItem.bind(this);
         this.onToggleImportant = this.onToggleImportant.bind(this);
         this.onToggleLiked = this.onToggleLiked.bind(this);
+        this.onToggleDone = this.onToggleDone.bind(this);
         this.onUpdateSearch = this.onUpdateSearch.bind(this);
         this.onFilterSelect = this.onFilterSelect.bind(this);
         this.maxId = 4;
     }
-
+    /*Võimaldab elemente loendist eemaldada*/
     deleteItem(id) {
         this.setState(({data}) => {
             const index = data.findIndex(elem => elem.id === id);
@@ -40,7 +41,7 @@ export default class App extends Component {
             }
         });
     }
-
+    /*Võimaldab loendisse lisada uusi elemente*/
     addItem(body) {
         const newItem = {
             label: body,
@@ -54,7 +55,7 @@ export default class App extends Component {
             }
         })
     }
-
+    /*Võimaldab määrata loendi elemendi väärtuse "oluline"*/
     onToggleImportant(id) {
         this.setState(({data}) => {
             const index = data.findIndex(elem => elem.id === id);
@@ -68,7 +69,7 @@ export default class App extends Component {
             }
         });
     }
-
+    /*Võimaldab määrata loendi elemendi jaoks väärtuse "meeldis"*/
     onToggleLiked(id) {
         this.setState(({data}) => {
             const index = data.findIndex(elem => elem.id === id);
@@ -82,7 +83,21 @@ export default class App extends Component {
             }
         });
     }
+    /*Võimaldab määrata loendi elemendi väärtuse "tehtud"*/
+    onToggleDone(id) {
+        this.setState(({data}) => {
+            const index = data.findIndex(elem => elem.id === id);
 
+            const old = data[index];
+            const newItem = {...old, done: !old.done}
+
+            const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+            return {
+                data: newArr
+            }
+        });
+    }
+    /*Võimaldab otsinguriba abil otsida vajalikku loendi elementi*/
     searchPost(items, term) {
         if (term.length === 0) {
             return items
@@ -92,7 +107,8 @@ export default class App extends Component {
             return item.label.indexOf(term) > -1
         });
     }
-
+    /*Võimaldab loendi elemente filtreerida kriteeriumi järgi, 
+    kas elemendil on väärtus "meeldis"*/
     filterPost(items, filter) {
         if (filter === 'like') {
             return items.filter(item => item.like)
@@ -100,15 +116,15 @@ export default class App extends Component {
             return items
         }
     }
-
+    /*Võimaldab jälgida kasutaja sisestatud päringut otsinguribale*/
     onUpdateSearch(term) {
         this.setState({term})
     }
-
+    /*Võimaldab filtreerida loendi elemente ja väljastada ainult neid, mis vastavad filtri kriteeriumidele*/
     onFilterSelect(filter){
         this.setState({filter})
     }
-
+    /*Kogub kõik elemendid kokku ja jälgib kõiki sündmusi*/
     render() {
         const {data, term, filter} = this.state;
 
@@ -129,7 +145,8 @@ export default class App extends Component {
                 posts={visiblePosts}
                 onDelete={this.deleteItem}
                 onToggleImportant={this.onToggleImportant}
-                onToggleLiked={this.onToggleLiked}/>
+                onToggleLiked={this.onToggleLiked}
+                onToggleDone={this.onToggleDone}/>
                 <PostAddForm
                 onAdd={this.addItem}/>
             </div>

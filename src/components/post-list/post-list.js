@@ -2,8 +2,8 @@ import React from 'react';
 
 import PostListItem from '../post-list-item';
 import './post-list.css'
-
-const PostList = ({posts, onDelete, onToggleImportant, onToggleLiked}) => {
+/*Loob nimekirja, mis sisaldab kõiki meie kirjeid*/
+const PostList = ({posts, onDelete, onToggleImportant, onToggleLiked, onToggleDone}) => {
 
     const elements = posts.map((item) => {
         const {id, ...itemProps} = item;
@@ -13,7 +13,8 @@ const PostList = ({posts, onDelete, onToggleImportant, onToggleLiked}) => {
                 {...itemProps}
                 onDelete={() => onDelete(id)}
                 onToggleImportant={() => onToggleImportant(id)}
-                onToggleLiked={() => onToggleLiked(id)}/>
+                onToggleLiked={() => onToggleLiked(id)}
+                onToggleDone={() => onToggleDone(id)}/>
             </li>
         )
     });

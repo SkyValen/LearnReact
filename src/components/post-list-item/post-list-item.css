@@ -15,7 +15,10 @@
     outline: none;
 }
 .app-list-item .btn-star {
-    color: #FFD700;
+    color: #aeaeae;
+}
+.app-list-item .btn-check {
+    color: #aeaeae
 }
 .app-list-item .btn-trash {
     color: red;
@@ -48,7 +51,13 @@
 .app-list-item.important .app-list-item-label {
     color: #FFD700;
 }
+.app-list-item.done .app-list-item-label {
+    text-decoration: line-through;
+}
 
 .app-list-item.important .btn-star {
-    color: #aeaeae;
+    color: #FFD700;
+}
+.app-list-item.done .btn-check {
+    color: green;
 }

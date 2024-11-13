@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 
 import './post-add-form.css'
 
@@ -11,11 +11,13 @@ export default class PostAddForm extends Component {
         this.onValueChange = this.onValueChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
+    //Säilitab väljale sisestatud väärtuse
     onValueChange(e) {
         this.setState({
             text: e.target.value
         });
     }
+    // saadab väärtuse, mis asub sisendväljal
     onSubmit(e) {
         e.preventDefault();
         this.props.onAdd(this.state.text);
@@ -23,6 +25,8 @@ export default class PostAddForm extends Component {
             text: ''
         });
     }
+    /*Projekti käivitamisel loob elemendi veeväljaga ja 
+    funktsioonide täitmine teatud tingimustel*/
     render() {
         return (
             <form
@@ -30,7 +34,7 @@ export default class PostAddForm extends Component {
                 onSubmit={this.onSubmit}>
                 <input
                     type="text"
-                    placeholder="О чём вы думаете сейчас?"
+                    placeholder="Mida sa praegu mõtled?"
                     className="form-control new-post-label"
                     onChange={this.onValueChange}
                     value={this.state.text}
@@ -38,7 +42,7 @@ export default class PostAddForm extends Component {
                 <button
                     type="submit"
                     className="btn btn-outline-secondary">
-                    Добавить
+                    Lisama
                 </button>
             </form>
         )
